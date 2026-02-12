@@ -44,7 +44,7 @@ async def recipe(recipe_id: int) -> models.Recipe:
 
 
 @app.post("/recipe/", response_model=schemas.RecipeDetailResponse)
-async def recipe(recipe: schemas.RecipeCreate) -> models.Recipe:
+async def create_recipe(recipe: schemas.RecipeCreate) -> models.Recipe:
     new_recipe = models.Recipe(**recipe.model_dump())
     async with session.begin():
         session.add(new_recipe)

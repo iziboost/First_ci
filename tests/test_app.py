@@ -41,7 +41,6 @@ async def test_get_recipe_and_views(client):
 
     assert resp1.json()["amount_views"] == 1
     assert resp2.json()["amount_views"] == 2
-    print(f"✅ Просмотры: 0 → 1 → 2")
 
 
 @pytest.mark.asyncio
@@ -51,4 +50,3 @@ async def test_recipe_not_found(client):
 
     assert response.status_code == 404
     assert response.json()["detail"] == "Recipe not found"
-    print(f"✅ 404 Not Found работает")
