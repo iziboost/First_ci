@@ -1,0 +1,23 @@
+# Виртуальное окружение
+venv/
+.venv/
+env/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# База данных
+*.db
+*.db-journal
+
+# Другие модули (ВАЖНО!)
+../../module_27_postgres_migrations/
+../../module_26_*/ 
+../../module_28_*/
+../../module_29_*/
