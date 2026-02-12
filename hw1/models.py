@@ -1,9 +1,10 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, Integer, String
 
 from hw1.database import Base
 
+
 class Recipe(Base):
-    __tablename__ = 'Recipe'
+    __tablename__ = "Recipe"
     id = Column(Integer, primary_key=True, index=True)
     title = Column(String, index=True)
     time_min = Column(Integer, index=True)

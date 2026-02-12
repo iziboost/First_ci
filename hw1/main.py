@@ -1,13 +1,11 @@
+from contextlib import asynccontextmanager
 from typing import List
 
+import uvicorn
 from fastapi import FastAPI, HTTPException
 from sqlalchemy.future import select
-from contextlib import asynccontextmanager
-import uvicorn
 
-
-from hw1 import models
-from hw1 import schemas
+from hw1 import models, schemas
 from hw1.database import engine, session
 
 
@@ -23,13 +21,13 @@ async def lifespan(app: FastAPI):
 app = FastAPI(lifespan=lifespan)
 
 
-@app.get('/recipes', response_model=List[schemas.RecipeListResponse])
+@app.get("/recipes", response_model=List[schemas.RecipeListResponse])
 async def recipes() -> List[models.Recipe]:
     res = await session.execute(select(models.Recipe))
     return res.scalars().all()
 
 
-@app.get('/recipes/{recipe_id}', response_model=schemas.RecipeDetailResponse)
+@app.get("/recipes/{recipe_id}", response_model=schemas.RecipeDetailResponse)
 async def recipe(recipe_id: int) -> models.Recipe:
 
     recipe = await session.get(models.Recipe, recipe_id)
@@ -44,7 +42,8 @@ async def recipe(recipe_id: int) -> models.Recipe:
 
     return recipe
 
-@app.post('/recipe/', response_model=schemas.RecipeDetailResponse)
+
+@app.post("/recipe/", response_model=schemas.RecipeDetailResponse)
 async def recipe(recipe: schemas.RecipeCreate) -> models.Recipe:
     new_recipe = models.Recipe(**recipe.model_dump())
     async with session.begin():

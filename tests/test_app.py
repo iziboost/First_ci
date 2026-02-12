@@ -8,7 +8,7 @@ async def test_create_recipe(client):
         "title": "Яичница",
         "time_min": 5,
         "ingredients": "яйца, масло, соль",
-        "description": "Разбить яйца и пожарить"
+        "description": "Разбить яйца и пожарить",
     }
 
     response = await client.post("/recipe/", json=recipe)
@@ -24,12 +24,15 @@ async def test_create_recipe(client):
 async def test_get_recipe_and_views(client):
     """Тест 2: Получение рецепта и счетчик просмотров"""
     # Создаем рецепт
-    create_resp = await client.post("/recipe/", json={
-        "title": "Блины",
-        "time_min": 30,
-        "ingredients": "мука, молоко, яйца",
-        "description": "Замесить и пожарить"
-    })
+    create_resp = await client.post(
+        "/recipe/",
+        json={
+            "title": "Блины",
+            "time_min": 30,
+            "ingredients": "мука, молоко, яйца",
+            "description": "Замесить и пожарить",
+        },
+    )
     recipe_id = create_resp.json()["id"]
 
     # Получаем рецепт 2 раза

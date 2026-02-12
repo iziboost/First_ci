@@ -1,11 +1,12 @@
 import sys
 from pathlib import Path
+
 import pytest
-from httpx import AsyncClient, ASGITransport
+from httpx import ASGITransport, AsyncClient
 
-
+from hw1.database import Base, engine
 from hw1.main import app
-from hw1.database import engine, Base
+
 
 @pytest.fixture(autouse=True)
 async def setup_database():
@@ -15,6 +16,7 @@ async def setup_database():
     yield
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
+
 
 @pytest.fixture
 async def client():
