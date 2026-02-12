@@ -1,0 +1,36 @@
+name: CI/CD
+
+on:
+  push:
+    branches: [ "*" ]      # На каждый пуш в любую ветку
+  pull_request:
+    branches: [ "*" ]      # На каждый PR в любую ветку
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Lint with black
+      run: black --check hw1/ tests/ --diff
+
+    - name: Lint with isort
+      run: isort --check-only hw1/ tests/
+
+    - name: Lint with flake8
+      run: flake8 hw1/ tests/
+
+    - name: Test with pytest
+      run: pytest tests/ -v
